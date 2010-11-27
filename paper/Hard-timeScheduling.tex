@@ -1,0 +1,146 @@
+%\documentclass[10pt,conference]{IEEEtran}
+\documentclass[conference]{IEEEtran}
+
+\makeatletter
+\def\ps@headings{%
+\def\@oddhead{\mbox{}\scriptsize\rightmark \hfil \thepage}%
+\def\@evenhead{\scriptsize\thepage \hfil \leftmark\mbox{}}%
+\def\@oddfoot{}%
+\def\@evenfoot{}}
+\makeatother
+
+\pagestyle{headings}
+
+\newcommand{\nop}[1]{}
+\usepackage{stmaryrd}
+\usepackage{bbding}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{multirow}
+\usepackage{balance}
+%\usepackage{bibentry}
+%\usepackage[square,comma]{natbib}
+
+\usepackage[centertags]{amsmath}
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{Rule}{Rule}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{result}{Result}
+\newtheorem{question}{Question}
+\newtheorem{proof}{Proof}
+\newtheorem{example}{Example}
+
+\def\linespaces{0.95}
+\def\baselinestretch{\linespaces}
+
+\nop{
+
+\documentclass[11pt,conference]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{balance}
+\usepackage{amsmath}
+\begin{document}
+\newcommand{\qed}{\mbox{\rule[0pt]{1.0ex}{1.0ex}}}
+\def\boxend{\hspace*{\fill} $\QED$}
+
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+% \newtheorem{assumption}{Assumption}
+% \newtheorem{property}{Property}
+% \newtheorem{conjecture}{Conjecture}
+}
+
+
+\newcounter{line}
+\input epsf
+% \renewcommand{\baselinestretch}{0.95}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+\title{Scheduling for Recurring Tasks in Energy Harvesting Sensor Nodes}
+
+\nop{
+\author{\IEEEauthorblockN{A \IEEEauthorrefmark{1},
+B \IEEEauthorrefmark{2}, and C \IEEEauthorrefmark{3}}\\
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Dept. of Computer Science, University of Victoria, B.C., Canada}
+}
+}
+%\date{}
+%\CopyrightYear{2008}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+% A category with the (minimum) three required fields
+%\category{C.4}{Performance of Systems}{Modeling techniques}
+%\category{H.1}{Models and Principles}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Theory, Performance}
+
+\begin{IEEEkeywords} Real-Time Scheduling, Recurring Tasks, Energy Harvester, Sensors
+\end{IEEEkeywords}
+
+\section{Introduction}\label{sec:introduction}
+
+\nop{
+The rest of the paper is organized as follows. We introduce the related work in Section~\ref{sec:work} and the background knowledge in Section~\ref{sec:background}. In Section~\ref{sec:Tradeoff}, we discuss the tradeoffs in model transform in stochastic network calculus. In Section~\ref{sec:impact}, we investigate the impact of model transform on performance evaluation. In Section~\ref{sec:integration}, we present a simple methodology for model buildup and performance analysis. In Section~\ref{sec:example}, we use an example to illustrate some ``tricks" in the application of stochastic network calculus. The paper is concluded in Section~\ref{sec:conclusion}.  
+}
+
+\section{Related Work}
+\label{sec:work}
+
+\cite{Liu73, Moser07}.
+
+\section{Model and Problem Formulation} \label{sec:model}
+
+We make the following assumptions on tasks execution in the sensor nodes, which are generally true but might not be absolutely necessary for certain application scenarios. 
+\begin{itemize}
+	\item (A1) The requests for all tasks are periodic, with constant interval between requests. 
+	\item (A2) Each request of a task has a hard deadline, which is defined as the time when the next request for the task arrives. 
+	\item (A3) A task has constant run-time and consumes constant energy\footnote{Energy consumption on sensor nodes largely depends on the operations of peripheral devices (e.g., sensors, wireless transmitters) associated with the task instead of executing code in the microprocessor.}. Run-time refers to the time which is taken by the microprocessor to execute the task without interruption.
+	\item (A4) The task drains the power with a constant rate during its execution time.       
+	\item (A5) The tasks are independent in that requests for a given task do not depend on the initialization or the completion of requests for other tasks.	
+\end{itemize}
+
+The sensor nodes consist of an energy harvestor component with the following assumptions
+ \begin{itemize}
+	\item (A6) The energy harvestor provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
+	\item (A7) The sensor node also includes an energy storage (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
+\end{itemize}
+ 
+We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, E_i, T_i>$, where $I_i$ denotes the periodic interval time between requests, $E_i$ denotes the energy consumption of the task, and $T_i$ denotes the run-time of the task. We can denote the energy component by $<C, P_S(t)>$. For a set of tasks scheduled according to some scheduling algorithm, we say that an \textit{overflow} occurs at time $t$ if $t$ is the deadline of an unfulfilled request or $t$ is the time when the energy level of the node drops to zero. A set of recurring tasks is scheduable if they can be scheduled so that no overflow ever occurs. 
+
+We are interested in answering the following question: Is a given set of recurring tasks schedulable with a high probability?  
+
+%\balance
+
+\bibliographystyle{abbrv}
+
+\bibliographystyle{plain}
+%\small \baselineskip 9pt
+\bibliography{referenceEnergy}
+
+\end{document}
