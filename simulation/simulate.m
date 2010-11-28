@@ -1,3 +1,4 @@
+function numViolations = simulate(taskSet, scheduleTable, batteryLevel, idleEnergy)
 %Simulation Framework
 %November 26th, 2010
 
@@ -6,32 +7,32 @@
 clear functions;        % clear persistent values in functions
 
 %set endpoint for simulation
-simEnd = 20;
+simEnd = 40;
 
 %define a counter to keep track of the number of energy violations
 numViolations = 0;
 
 %B_0
-currentBatteryLevel = 12;
+currentBatteryLevel = batteryLevel;
 
 %create an array to store battery history
 batteryHistory = zeros(1,simEnd);
 batteryHistory(1) = currentBatteryLevel;
 
 %set some value for idle task energy demand
-idleEnergy = 0.3;
+%idleEnergy = 0.2;
 
 %create taskSet Table
 %column 1 energy consumed per time unit, column 2 task duration
-taskSet = [1.0, 3
-           1.5, 2];
+% taskSet = [1.0, 3
+%            1.5, 2];
 
 %static schedule table
 %column 1 time, column 2 task#
-scheduleTable = [   3,1
-                    6,2
-                    13,1
-                    16,2];
+% scheduleTable = [   3,1
+%                     6,2
+%                     13,1
+%                     16,2];
 
 %current executing task. If 0 --> idle
 curTask = 0;
@@ -78,3 +79,5 @@ disp(' ')
 x = 0 : size(batteryHistory, 2) - 1;
 plot(x, batteryHistory);
 axis([0 simEnd 0 12])
+
+end
