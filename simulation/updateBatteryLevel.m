@@ -1,4 +1,4 @@
-function B = updateBatteryLevel(B_0, task_demand)
+function [B, rad] = updateBatteryLevel(B_0, task_demand)
 % this function calculates the battery charge based on weather condition
 % and the task energy demand
 
@@ -21,21 +21,16 @@ R = [0.70 0.15 0.15
     0.15 0.15 0.70];
 
 % initial weather condition
-
-initial_weather = randi(3);
-if initial_weather == 1
-    radiation = G(1);          % low radiation level
-end
-if initial_weather == 2
-    radiation = G(2);          % medium radiation level
-end
-if initial_weather == 3       
-    radiation = G(3);          % high radiation level
+persistent radiation;           % keep persistent across function calls
+if isempty(radiation)
+    %initialize at first function call (if "clear functions" was called)
+    initial_weather = randi(3);
+    radiation = G(initial_weather);
 end
 
 % weather transition based on R
 
-transition = rand(1);
+transition = rand();
 
 if radiation == G(1)
         if (transition <= 0.7)
@@ -50,8 +45,7 @@ if radiation == G(1)
             radiation = G(3);                           % transition from low to high radiation
             output_current = I_c(3);                    
         end
-end
-if radiation == G(2)
+elseif radiation == G(2)
         if (transition <= 0.7)
             radiation = G(2);                           % no transition
             output_current = I_c(2);
@@ -64,8 +58,7 @@ if radiation == G(2)
             radiation = G(3);                           % transition from medium to high radiation
             output_current = I_c(2);
         end
-end
-if radiation == G(3)
+elseif radiation == G(3)
         if (transition <= 0.7)                         
             radiation = G(3);                           % no transition
             output_current = I_c(3);
@@ -93,6 +86,7 @@ end
 % battery discharge due to task execution (considering delta_t = 1s)
 
 B = B - task_demand;
+rad = radiation;
 
 end
 
