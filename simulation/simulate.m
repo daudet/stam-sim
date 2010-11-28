@@ -1,4 +1,4 @@
-function numViolations = simulate(taskSet, scheduleTable, simEnd, batteryLevel, idleEnergy)
+function violation = simulate(taskSet, scheduleTable, simEnd, batteryLevel, idleEnergy, quiet)
 %Simulation Framework
 %November 26th, 2010
 
@@ -7,7 +7,7 @@ function numViolations = simulate(taskSet, scheduleTable, simEnd, batteryLevel, 
 clear functions;        % clear persistent values in functions
 
 %define a counter to keep track of the number of energy violations
-numViolations = 0;
+violation = 0;
 
 %B_0
 currentBatteryLevel = batteryLevel;
@@ -24,7 +24,7 @@ taskEnd = -1;
 %set initial row index of scheduleTable
 scheduleIndex = 1;
 
-for t = 0 : simEnd
+for t = 1 : simEnd
     if (t == scheduleTable(scheduleIndex,1))
         curTask = scheduleTable(scheduleIndex,2);
         taskEnd =  t + taskSet(curTask,2) - 1;
@@ -34,17 +34,20 @@ for t = 0 : simEnd
     if (curTask == 0)
         energyConsumed = idleEnergy;
     else
-        energyConsumed = taskSet(curTask,1); 
+        energyConsumed = taskSet(curTask,3); 
     end
     [currentBatteryLevel, radiation] = updateBatteryLevel(currentBatteryLevel, energyConsumed);
     
     %if there is no energy available, there is a violation
     if currentBatteryLevel < 0
-        numViolations = numViolations + 1;
+        violation = 1;
+        break;
     end
     
-    s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
-    disp(s)
+    if quiet == 0
+        s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
+        disp(s)
+    end
     
     
     if (taskEnd == t)
@@ -57,9 +60,11 @@ for t = 0 : simEnd
     
     %print the battery history level  
 end
-disp(' ')
-x = 0 : size(batteryHistory, 2) - 1;
-plot(x, batteryHistory);
-axis([0 simEnd 0 12])
+if quiet == 0
+    disp(' ')
+    x = 0 : size(batteryHistory, 2) - 1;
+    plot(x, batteryHistory);
+    axis([0 simEnd 0 12])
+end
 
 end
