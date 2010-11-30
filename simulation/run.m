@@ -9,11 +9,32 @@ idleEnergy = 0.1;
 batteryLevel = 12;
 
 % end time for simulation
-simEnd = 40;
+simEnd = 100;
 
 % static schedule table
 % column 1 is start time, column 2 task number
 scheduleTable = scheduleEDF(taskSet, simEnd);
+
+visual = zeros(simEnd,4)';
+
+for tableIndex = 1 : simEnd
+    taskNum = scheduleTable(tableIndex,2);
+    execTime = scheduleTable(tableIndex,1);
+    if taskNum ~= 0
+        for timeSlice = execTime : ((execTime + taskSet(taskNum,2)) - 1)
+            visual(taskNum, timeSlice) = taskSet(taskNum,3);
+        end
+    end
+end
+
+visual
+subplot(2,1,1)
+hold on
+stairs((0:size(visual,2)-1) , visual(1,:));
+stairs((0:size(visual,2)-1) , visual(2,:)-2);
+stairs((0:size(visual,2)-1) , visual(3,:)-4);
+stairs((0:size(visual,2)-1) , visual(4,:)-6);
+hold off
 
 % keep track of the number of violations that have occurred in a
 % simulation.

@@ -49,7 +49,6 @@ for t = 1 : simEnd
         disp(s)
     end
     
-    
     if (taskEnd == t)
         curTask = 0;
         scheduleIndex = mod(scheduleIndex, size(scheduleTable, 1)) + 1;
@@ -63,7 +62,7 @@ end
 if quiet == 0
     disp(' ')
     x = 0 : size(batteryHistory, 2) - 1;
-    plot(x, batteryHistory);
+    subplot(2,1,2), plot(x, batteryHistory);
     axis([0 simEnd 0 12])
 end
 
