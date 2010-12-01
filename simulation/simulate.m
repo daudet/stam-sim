@@ -45,8 +45,8 @@ for t = 1 : simEnd
     end
     
     if quiet == 0
-        s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
-        disp(s)
+        %s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
+        %disp(s)
     end
     
     if (taskEnd == t)

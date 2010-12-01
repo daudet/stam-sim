@@ -27,13 +27,15 @@ for tableIndex = 1 : simEnd
     end
 end
 
-visual
+% visualize simulation
+clf;    % clear the figure window
+vstep = 1.2 * max(max(visual));     % vertical step to fit four 
 subplot(2,1,1)
 hold on
 stairs((0:size(visual,2)-1) , visual(1,:));
-stairs((0:size(visual,2)-1) , visual(2,:)-2);
-stairs((0:size(visual,2)-1) , visual(3,:)-4);
-stairs((0:size(visual,2)-1) , visual(4,:)-6);
+stairs((0:size(visual,2)-1) , visual(2,:) - vstep);
+stairs((0:size(visual,2)-1) , visual(3,:) - 2*vstep);
+stairs((0:size(visual,2)-1) , visual(4,:) - 3*vstep);
 hold off
 
 % keep track of the number of violations that have occurred in a
