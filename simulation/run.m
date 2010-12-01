@@ -15,6 +15,9 @@ simEnd = 100;
 % column 1 is start time, column 2 task number
 scheduleTable = scheduleEDF(taskSet, simEnd);
 
+%create STAM task set and create schedule table
+%scheduleTable = scheduleEDF(createSTAM(taskSet), simEnd);
+
 visual = zeros(simEnd,4)';
 
 for tableIndex = 1 : simEnd

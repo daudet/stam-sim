@@ -8,10 +8,10 @@ function virtualTaskList = createSTAM( taskList )
 
 %calculate the mean energy demand across all tasks in the task set
 meanEnergy = 0;
-taskListSize = size(taskList,1)
+taskListSize = size(taskList,1);
 
 	for i = 1:taskListSize
-		meanEnergy += taskList(i,3);
+		meanEnergy = meanEnergy + taskList(i,3);
 	end
 	meanEnergy = meanEnergy ./ taskListSize;
 
@@ -19,18 +19,27 @@ taskListSize = size(taskList,1)
 virtualTaskList = zeros(taskListSize, 3);
 
 	for i = 1:taskListSize
-		% if the tasks energy demand is below the mean energy demand we
-		% cannot perform any smoothing
-		if (taskList(i,2) ~= meanEnergy)
+		if (taskList(i,3) > meanEnergy)
 			actualEnergyArea = taskList(i,2) * taskList(i,3);
 			virtualDuration = actualEnergyArea ./ meanEnergy;
 			%populate the virtual task set
 			virtualTaskList(i,1) = taskList(i,1);
-			virtualTaskList(i,2) = virtualDuration;
+			virtualTaskList(i,2) = ceil(virtualDuration);
 			virtualTaskList(i,3) = meanEnergy;
-		end
-	end
+        % if the task's energy demand is below the mean energy demand we
+		% cannot perform any smoothing
+        else
+           virtualTaskList(i,1) = taskList(i,1);
+           virtualTaskList(i,2) = taskList(i,2);
+           virtualTaskList(i,3) = taskList(i,3);
+        end
+        
+    end
 
+    %compare the taskList with the virtual task list
+    taskList
+    virtualTaskList
+    
 % this virtual task set then needs to be checked to see if
 % server utilization is greater than 1. 
 
