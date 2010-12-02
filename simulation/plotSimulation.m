@@ -27,7 +27,7 @@ end
 
 % visualize simulation
 clf;    % clear the figure window
-vstep = 1.2 * max(max(visual));     % vertical step to fit four 
+vstep = 1.2 * max(max(visual));     % vertical step to fit all task swimlanes
 subplot(2,1,1)
 hold on
 stairs((0:size(visual,2)-1) , visual(1,:));
@@ -36,7 +36,7 @@ stairs((0:size(visual,2)-1) , visual(3,:) - 2*vstep);
 stairs((0:size(visual,2)-1) , visual(4,:) - 3*vstep);
 if ~isempty(stamEquivalent)
     % plot the STAM equivalent in green if it's defined
-    % We're adding a small amount to the x axis so that STAM tasks and
+    % We're putting the STAM tasks slightly out of phase so that STAM tasks and
     % regular tasks are both visible when they are scheduled at the same
     % time
     stairs((0:size(stamVisual,2)-1) + 0.002*simEnd , stamVisual(1,:), 'Color', 'green');

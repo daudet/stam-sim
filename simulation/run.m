@@ -4,7 +4,7 @@ clear functions;        % clear persistent values in functions
 
 % create taskSet Table
 % column 1 is energy consumed per time unit, column 2 task duration
-taskList = generateTaskSet(4);
+taskList = generateTaskList(4);
 
 % set some value for idle task energy demand
 idleEnergy = 0.1;

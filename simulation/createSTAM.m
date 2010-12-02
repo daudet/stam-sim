@@ -36,6 +36,7 @@ end
     
 % this virtual task set then needs to be checked to see if
 % server utilization is greater than 1. 
+%utilization = sum(virtualTaskList(:, 2) ./ virtualTaskList(:, 1));
 
 % The virtual task set then needs to be sent to the schedule* function
 % so a schedule can be generated
