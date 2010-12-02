@@ -1,10 +1,6 @@
-function violation = simulate(taskSet, scheduleTable, simEnd, batteryLevel, idleEnergy, quiet)
+function [violation, batteryHistory] = simulate(taskSet, scheduleTable, simEnd, batteryLevel, idleEnergy)
 %Simulation Framework
 %November 26th, 2010
-
-%rand('seed', 0);       % initialize rand to known seed
-%randn('seed', 0);      % initialize randn to known seed
-clear functions;        % clear persistent values in functions
 
 %define a counter to keep track of the number of energy violations
 violation = 0;
@@ -44,10 +40,10 @@ for t = 1 : simEnd
         break;
     end
     
-    if quiet == 0
-        %s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
-        %disp(s)
-    end
+%     if quiet == 0
+%         s = sprintf('%5d - Running task %d, using energy %.2f (%.2f remaining, charged from irradiance of %.2f W/m2)', t, curTask, energyConsumed, currentBatteryLevel, radiation);
+%         disp(s)
+%     end
     
     if (taskEnd == t)
         curTask = 0;
@@ -58,12 +54,6 @@ for t = 1 : simEnd
     batteryHistory(t+1) = currentBatteryLevel;
     
     %print the battery history level  
-end
-if quiet == 0
-    disp(' ')
-    x = 0 : size(batteryHistory, 2) - 1;
-    subplot(2,1,2), plot(x, batteryHistory);
-    axis([0 simEnd 0 12])
 end
 
 end

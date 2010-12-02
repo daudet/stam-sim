@@ -8,7 +8,7 @@ function taskSet = generateTaskSet(numTasks)
 %       column 2 - The duration of the task, in time units
 %       column 3 - The task's energy usage per time unit
 
-    function taskSet = generateTaskSetRecurse(numTasks, recursion)
+    function taskSet = generateTaskListRecurse(numTasks, recursion)
         % guard against infinite recursion
         if recursion > 100
             taskSet = [];
@@ -31,6 +31,6 @@ function taskSet = generateTaskSet(numTasks)
         end
     end
 
-    taskSet = generateTaskSetRecurse(numTasks, 0);
+    taskSet = generateTaskListRecurse(numTasks, 0);
 end
 
