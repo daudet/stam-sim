@@ -26,8 +26,8 @@ while t < scheduleLength
     % already run during this period
     taskinfo = num2cell(queue(i,:));
     [task, period, runtime, energy, lastDeadline, nextDeadline] = taskinfo{:};
-    s = sprintf('Task %2d scheduled to run at time %5d (last deadline was %5d, this deadline was %5d).', task, t, lastDeadline, nextDeadline);
-    disp(s);
+    %s = sprintf('Task %2d scheduled to run at time %5d (last deadline was %5d, this deadline was %5d).', task, t, lastDeadline, nextDeadline);
+    %disp(s);
     
     schedule(scheduleIndex, 1) = t;
     schedule(scheduleIndex, 2) = task;
@@ -41,7 +41,7 @@ while t < scheduleLength
 end
 
 % strip the trailing zeros from the schedule array
-[schedule(schedule(:,1) ~= 0, 1) schedule(schedule(:,2) ~= 0, 2)]
+schedule = [schedule(schedule(:,1) ~= 0, 1) schedule(schedule(:,2) ~= 0, 2)];
 
 end
 

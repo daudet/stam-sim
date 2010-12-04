@@ -1,5 +1,13 @@
-%rand('seed', 0);       % initialize rand to known seed
-%randn('seed', 0);      % initialize randn to known seed
+numRuns = 1;
+numSimulations = 1;
+
+edfViolationHistory = zeros(numRuns + 1,1);
+stamViolationHistory = zeros(numRuns + 1, 1);
+for j = 1 : numRuns
+seed = j + 1;
+
+rand('seed', seed);       % initialize rand to known seed
+randn('seed', seed);      % initialize randn to known seed
 clear functions;        % clear persistent values in functions
 
 % create taskSet Table
@@ -21,18 +29,30 @@ scheduleTable = scheduleEDF(taskList, simEnd);
 
 %create STAM task set and create schedule table
 stamTasks = createSTAM(taskList);
-stamTable = scheduleEDF(stamTasks, simEnd);
+stamSchedule = scheduleEDF(stamTasks, simEnd);
 
 % keep track of the number of violations that have occurred in a
 % simulation.
 numViolations = 0;
-
-for i = 1 : 1
-% simulate the calculated schedule
-[v, lastBatteryHistory] = simulate(taskList, scheduleTable, simEnd, batteryLevel, idleEnergy);
-numViolations = numViolations + v;
+stamViolations = 0;
+seed = rand();
+rand('seed', seed);       % initialize rand to known seed
+randn('seed', seed);      % initialize randn to known seed
+for i = 1 : numSimulations
+    % simulate the calculated schedule
+    [v, lastBatteryHistory] = simulate(taskList, scheduleTable, simEnd, batteryLevel, idleEnergy);
+    numViolations = numViolations + v;
 end
-numViolations
+rand('seed', seed);       % initialize rand to known seed
+randn('seed', seed);      % initialize randn to known seed
+for i = 1 : numSimulations
+    [v, lastBatteryHistory] = simulate(stamTasks, stamSchedule, simEnd, batteryLevel, idleEnergy);
+    stamViolations = stamViolations + v;
+end
+%numViolations
+%stamViolations
+edfViolationHistory(j) = numViolations;
+stamViolationHistory(j) = stamViolations;
 
-
-plotSimulation(taskList, scheduleTable, stamTasks, stamTable, lastBatteryHistory);
+plotSimulation(taskList, scheduleTable, stamTasks, stamSchedule, lastBatteryHistory);
+end
