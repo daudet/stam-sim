@@ -23,6 +23,8 @@
 \usepackage{balance}
 %\usepackage{bibentry}
 %\usepackage[square,comma]{natbib}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 \usepackage[centertags]{amsmath}
 
@@ -75,7 +77,7 @@
 
 \begin{document}
 
-\title{Scheduling for Recurring Tasks in Energy Harvesting Sensor Nodes}
+\title{Scheduling Recurring Tasks in Energy Harvesting Sensor Nodes}
 
 \nop{
 \author{\IEEEauthorblockN{A \IEEEauthorrefmark{1},
@@ -103,70 +105,26 @@ This will be written last\\
 \begin{IEEEkeywords} Real-Time Scheduling, Recurring Tasks, Energy Harvester, Sensors
 \end{IEEEkeywords}
 
-\section{Introduction}\label{sec:introduction}
 
-A wireless sensor network (\textsc{wsn}) consists of collaborating embedded devices (sensor nodes) with capabilities of sensing, computation and communication
-\cite{sudevalyam2010energy}. Wireless sensor networks can deployed for a plethora of purposes such as habitat \cite{mainwaring2002wireless},
-earthquake \cite{suzuki2007earthquake} and health \cite{saadaoui2007architecture} monitoring.
+\input{introduction}
 
-Most sensor nodes do not depend on existing infrastructure and are powered by batteries, which makes initial deployment in remote locations
-convenient. On the other hand, the lifetime of these embedded devices is limited by the amount of energy that can be stored in the batteries. Furthermore, 
-the number of sensors and their locations might render the activity of replacing nodes' batteries unfeasible \cite{moser2007real}. 
+\input{relatedworks}
 
-Intensive research has been conducted on energy harvesting as a way to extend the lifetime of wireless sensor networks. Several types of energy such as
-solar, eolic (wind), vibrational, and thermal among others can be scavenged from the surroundings of a sensor node to replenish its battery \cite{roundy2004power}. 
-Promising as it may seem, energy harvesting poses new challenges to the scientific community \cite{lu2010accurate}:
+\input{problem}
 
-\begin{itemize}
-	\item Environmental energy sources behave stochastically, which means it is not possible to know beforehand the exact amount of available energy.
-	\item Conventional task scheduling techniques were not designed for energy-limited scenarios and cannot deal properly with the uncertainty in energy availability.
-\end{itemize}
+\input{algorithm}
 
-This paper evaluates the performance of two task scheduling techniques, Earliest Deadline First (\textsc{edf}) and the Lazy Scheduling
-Algorithm (\textsc{lsa}), for a single node under energy-limited conditions. The two techniques were conceived for unlimited and limited energy scenarios respectively \cite{moser2007real}. We also present a new scheduling technique, the Smooth to Averate Method
-(\textsc{stam}), designed to handle bursts in power consumption and address both time and energy constraints adequately.  
+\input{simulation}
 
-We consider solar energy scavenging through photo-voltaic conversion, as it provides the highest power density of conventional environmental energy harvesting techniques
-\cite{raghunathan2005design}. We use a Markov model based on a matrix of transition probabilities for three radiation intensity states to predict
-the power provided by the harvesting unit \cite{poggi2000stochastic}.
+\input{conclusion}
 
-The rest of the paper is organized as follows...
 
-\section{Related Work} \label{sec:related work}
-To be written by Leandro\\
 
-\section{Model and Problem Formulation} \label{sec:model}
-
-To model task execution in the sensor nodes, we assume the following: 
-\begin{itemize}
-	\item (A1) The requests for all tasks are periodic, with constant interval between requests. 
-	\item (A2) Each request of a task has a hard deadline, which is defined as the time when the next request for the task arrives. 
-	\item (A3) A task has constant run-time. Run-time refers to the time that  is taken by the microprocessor to execute the task without interruption.
-	\item (A4) The task drains energy with a constant rate during its execution time\footnote{Energy consumption on sensor nodes largely depends on the operations of peripheral devices (e.g., sensors and wireless transmitters) associated with the task rather than executing code in the microprocessor.}.       
-	\item (A5) The tasks are independent in that requests for a given task do not depend on the initialization or the completion of requests for other tasks.
-	\item (A6) A schedule exists that satisfies the timing requirements of all tasks.
-\end{itemize}
-
-To model the energy harvester component we assume the following:
- \begin{itemize}
-	\item (A7) The energy harvester provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
-	\item (A8) The sensor node also includes an energy storage module (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
-\end{itemize}
- 
-We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, T_i, E_i>$, where $I_i$ denotes the periodic interval time between requests for the task, $T_i$ denotes the task's execution time, and $E_i$ denotes the task's energy consumption. We denote the harvester component by $<C(t), P_S(t)>$, where $C(t)$ is the energy capacity at time $t$ and $P_S(t)$ is the stochastic energy input function. For a set of tasks scheduled according to some scheduling algorithm, we say that a \textit{violation} occurs at time $t$ if the node's energy level drops to zero.
-
-In this paper we consider the question of how best to schedule tasks to reduce the likelihood of causing an energy violation.
 
 %\balance
 
-\section{Algorithm} \label{sec:algorithm}
 
-As a means of producing fewer energy violations when scheduling system tasks, a technique known as the \emph{Smooth to Average Method (STAM)} was created. This scheduling heuristic takes into account the average overall energy requirements of all tasks in a given system taskset. This energy average is then used to modify the given taskset to ensure that the energy consumption of each task is at or near the calculated threshold. This smoothing of energy consumption is done by creating a virtual task set with modified start and end times to allow energy consumption to be distributed over a large time interval. To accomplish this smoothing, tasks are still executed at their physical runtimes, but during the virtual period, more energy is able to be generated by the environmental source reducing the net energy consumption over the runtime of each task.
 
-\section{Simulation Evaluation} \label{sec:simulation}
-
-To study the results of using STAM to more effectively reduce energy violations in the proposed system, Matlab was used to simulate various tasksets. The simulation framework used both \emph{earliest-deadline first} (EDF) and \emph{lazy scheduling} (LS) algorithms to compare the effects of STAM.
-\section{Conclusion} \label{sec:conclusion}
 
 \bibliographystyle{abbrv}
 
