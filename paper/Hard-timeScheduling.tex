@@ -105,38 +105,29 @@ B \IEEEauthorrefmark{2}, and C \IEEEauthorrefmark{3}}\\
 
 \section{Introduction}\label{sec:introduction}
 
-\nop{
-The rest of the paper is organized as follows. We introduce the related work in Section~\ref{sec:work} and the background knowledge in Section~\ref{sec:background}.
- In Section~\ref{sec:Tradeoff}, we discuss the tradeoffs in model transform in stochastic network calculus. In Section~\ref{sec:impact},
- we investigate the impact of model transform on performance evaluation. In Section~\ref{sec:integration}, we present a simple methodology for model 
-buildup and performance analysis. In Section~\ref{sec:example}, we use an example to illustrate some ``tricks" in the application of stochastic network 
-calculus. The paper is concluded in Section~\ref{sec:conclusion}.  
-}
-
 A wireless sensor network (\textsc{wsn}) consists of collaborating embedded devices (sensor nodes) with capabilities of sensing, computation and communication
 \cite{sudevalyam2010energy}. Wireless sensor networks can deployed for a plethora of purposes such as habitat \cite{mainwaring2002wireless},
 earthquake \cite{suzuki2007earthquake} and health \cite{saadaoui2007architecture} monitoring.
 
-Most of sensor nodes do not depend on existing infrastructure and are powered by batteries, which makes initial deployment in remote locations somewhat
-convenient. On the other hand, the lifetime of these embedded devices is limited by the amount of energy that can be stored in batteries. Furthermore, 
-the huge amount of sensors and their locations might render the activity of replacing nodes' batteries unfeasible \cite{moser2007real}. 
+Most sensor nodes do not depend on existing infrastructure and are powered by batteries, which makes initial deployment in remote locations
+convenient. On the other hand, the lifetime of these embedded devices is limited by the amount of energy that can be stored in the batteries. Furthermore, 
+the number of sensors and their locations might render the activity of replacing nodes' batteries unfeasible \cite{moser2007real}. 
 
-Intensive research has been conducted on energy harvesting as a way of extending the lifetime of wireless sensor networks. Several types of energy such as
-solar, eolic, vibrational, thermal among others can be scavenged from the surroundings of a sensor node to replenish its battery \cite{roundy2004power}. 
+Intensive research has been conducted on energy harvesting as a way to extend the lifetime of wireless sensor networks. Several types of energy such as
+solar, eolic (wind), vibrational, and thermal among others can be scavenged from the surroundings of a sensor node to replenish its battery \cite{roundy2004power}. 
 Promising as it may seem, energy harvesting poses new challenges to the scientific community \cite{lu2010accurate}:
 
 \begin{itemize}
-	\item Environmental energy sources present stochastic behaviour, which means it is not possible to know beforehand the exact amount of available energy.
-	\item Conventional task scheduling techniques were not designed for energy-limited scenarios and cannot deal with the uncertainty in energy availability suitably.
+	\item Environmental energy sources behave stochastically, which means it is not possible to know beforehand the exact amount of available energy.
+	\item Conventional task scheduling techniques were not designed for energy-limited scenarios and cannot deal properly with the uncertainty in energy availability.
 \end{itemize}
 
-This paper focuses on only one sensor node and evaluates the performance of two task scheduling techniques, Earliest Deadline First (\textsc{edf}) and Lazy Scheduling
-Algorithm (\textsc{lsa}) under energy-limited conditions, namely battery capacity and environmental energy harvesting. The aforementioned techniques, \textsc{edf} 
-and \textsc{lsa}, were conceived for unlimited and limited energy scenarios respectively \cite{moser2007real}. We also present a new scheduling technique, xx xx xx xx  
-(\textsc{stam}), designed to avoid power consumption bursts (??) and address both time and energy constraints adequately.  
+This paper evaluates the performance of two task scheduling techniques, Earliest Deadline First (\textsc{edf}) and the Lazy Scheduling
+Algorithm (\textsc{lsa}), for a single node under energy-limited conditions. The two techniques were conceived for unlimited and limited energy scenarios respectively \cite{moser2007real}. We also present a new scheduling technique, the Smooth to Averate Method
+(\textsc{stam}), designed to handle bursts in power consumption and address both time and energy constraints adequately.  
 
-Even though several energy forms could have been used, solar energy scavenging through photo-voltaic conversion is employed as it provides the highest power density 
-\cite {raghunathan2005design}. A Markov model based on a matrix of transition probabilities for three radiation intensity states is utilized to predict
+We consider solar energy scavenging through photo-voltaic conversion, as it provides the highest power density of conventional environmental energy harvesting techniques
+\cite{raghunathan2005design}. We use a Markov model based on a matrix of transition probabilities for three radiation intensity states to predict
 the power provided by the harvesting unit \cite{poggi2000stochastic}.
 
 The rest of the paper is organized as follows...
@@ -150,41 +141,27 @@ Conclusion
 
 
 
-
-
-
-
- 
-
-
-
- 
-
-\section{Related Work}
-\label{sec:work}
-
-% cite{Liu73, Moser07, gorlatova2010networking, sudevalyam2010energy}.
-
 \section{Model and Problem Formulation} \label{sec:model}
 
-We make the following assumptions on tasks execution in the sensor nodes, which are generally true but might not be absolutely necessary for certain application scenarios. 
+To model task execution in the sensor nodes, we assume the following: 
 \begin{itemize}
 	\item (A1) The requests for all tasks are periodic, with constant interval between requests. 
 	\item (A2) Each request of a task has a hard deadline, which is defined as the time when the next request for the task arrives. 
-	\item (A3) A task has constant run-time and consumes constant energy\footnote{Energy consumption on sensor nodes largely depends on the operations of peripheral devices (e.g., sensors, wireless transmitters) associated with the task instead of executing code in the microprocessor.}. Run-time refers to the time which is taken by the microprocessor to execute the task without interruption.
-	\item (A4) The task drains the power with a constant rate during its execution time.       
-	\item (A5) The tasks are independent in that requests for a given task do not depend on the initialization or the completion of requests for other tasks.	
+	\item (A3) A task has constant run-time. Run-time refers to the time that  is taken by the microprocessor to execute the task without interruption.
+	\item (A4) The task drains energy with a constant rate during its execution time\footnote{Energy consumption on sensor nodes largely depends on the operations of peripheral devices (e.g., sensors and wireless transmitters) associated with the task rather than executing code in the microprocessor.}.       
+	\item (A5) The tasks are independent in that requests for a given task do not depend on the initialization or the completion of requests for other tasks.
+	\item{(A6) A schedule exists that satisfies the timing requirements of all tasks.
 \end{itemize}
 
-The sensor nodes consist of an energy harvestor component with the following assumptions
+To model the energy harvester component we assume the following:
  \begin{itemize}
-	\item (A6) The energy harvestor provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
-	\item (A7) The sensor node also includes an energy storage (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
+	\item (A7) The energy harvester provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
+	\item (A8) The sensor node also includes an energy storage module (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
 \end{itemize}
  
-We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, E_i, T_i>$, where $I_i$ denotes the periodic interval time between requests, $E_i$ denotes the energy consumption of the task, and $T_i$ denotes the run-time of the task. We can denote the energy component by $<C, P_S(t)>$. For a set of tasks scheduled according to some scheduling algorithm, we say that an \textit{overflow} occurs at time $t$ if $t$ is the deadline of an unfulfilled request or $t$ is the time when the energy level of the node drops to zero. A set of recurring tasks is scheduable if they can be scheduled so that no overflow ever occurs. 
+We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, T_i, E_i>$, where $I_i$ denotes the periodic interval time between requests for the task, $T_i$ denotes the task's execution time, and $E_i$ denotes the task's energy consumption. We denote the harvester component by $<C(t), P_S(t)>$, where $C(t)$ is the energy capacity at time $t$ and $P_S(t)$ is the stochastic energy input function. For a set of tasks scheduled according to some scheduling algorithm, we say that a \textit{violation} occurs at time $t$ if the node's energy level drops to zero.
 
-We are interested in answering the following question: Is a given set of recurring tasks schedulable with a high probability?  
+In this paper we consider the question of how best to schedule tasks to reduce the likelihood of causing an energy violation.
 
 %\balance
 
