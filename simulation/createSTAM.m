@@ -29,16 +29,4 @@ for i = 1 : taskListSize
 
 end
 
-%compare the taskList with the virtual task list
-%meanEnergy
-%taskList
-%virtualTaskList
-    
-% this virtual task set then needs to be checked to see if
-% server utilization is greater than 1. 
-%utilization = sum(virtualTaskList(:, 2) ./ virtualTaskList(:, 1));
-
-% The virtual task set then needs to be sent to the schedule* function
-% so a schedule can be generated
-
 end

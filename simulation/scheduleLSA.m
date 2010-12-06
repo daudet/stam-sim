@@ -47,7 +47,7 @@ while t < scheduleLength
 	%need to add some form of energy prediction based on a lower bound energy
 	%state of the Markovian model
 
-	if queue(i, 5) >= t
+    if queue(i, 5) >= t
         % skip ahead to the next task's runtime (this could be optimized)
         t = t + 1;
         continue;
