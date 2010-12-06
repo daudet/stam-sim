@@ -1,2 +1,20 @@
 \section{Related Work} \label{sec:related work}
-To be written by Leandro\\
+In \oldstylenums{1973}, Liu and Layland~\cite{Liu73} presented two classical scheduling algorithms, rate-monotonic priority assignment and deadline-driven scheduling, 
+and assess their performance based on processor utilization in unlimited energy scenarios. Moser \emph{et. al.}~\cite{moser2007real} described energy-aware \textsc{lsa} scheduling
+and proved that it optimally deals with time and energy constraints in a system whose energy storage is replenished predictably. 
+
+Power management algorithms based on duty-cycling between active and low-power modes of sensor nodes with energy harvesting capabilities are 
+presented by Kansal \emph{et. al.}~\cite{kansal2007power}. Niyato \emph{et. al.}~\cite{niyato2007sleep} investigate the impact of different sleep and wake-up strategies on data communication
+among solar-powered nodes. In~\cite{vigorito2007adaptive} Vigorito \emph{et. al.} propose an adaptive duty-cycling algorithm that ensures that power supply to sensor
+nodes is kept within operational levels regardless of changing environmental conditions. In~\cite{moser2007adaptive} Moser \emph{et. al.} also presents an adaptive power management
+model that can be customized to address different constraints and optimization objectives in energy harvesting systems.
+
+Predicting stochastic energy sources is problematic.  Lu \emph{et. al.}~\cite{lu2010accurate} assess three prediction techniques for real-time systems: regression analysis,
+moving average and exponential smoothing. Recas~\emph{et. al.}~\cite{recas2000hollows} employ the Weather-Conditioned Moving Average (\textsc{wcma}) model, which adapts to seasonal changes in
+solar power harvesting as well as sudden weather changes. Moser \emph{et. al.}~\cite{moser2007real} introduced energy variability curves to predict accurately
+the power provided by a harvesting unit. In~\cite{susu2008stochastic} Susu \emph{et. al.} use a discrete-time Markov chain in which only transitions between 
+consecutive states, representing energy levels, are allowed. On the other hand, Niyato \emph{et. al.}~\cite{niyato2007sleep} make use of a Markov chain model 
+that takes into consideration the influence of clouds and wind on solar radiation intensity. 
+
+The majority of energy harvesting systems are based on rechargeable batteries, as noted by Sudevalayam and Kulkarni~\cite{sudevalyam2010energy}.
+However, Simjee and Chou~\cite{simjee2007everlast} add that there has been increasing interest in supercapacitors, which theoretically have infinite charge cycles and high power densities. In~\cite{jiang2005perpetual}, Jiang \emph{et. al.} present a hybrid implementation based on two supercapacitors and one rechargeable battery.
