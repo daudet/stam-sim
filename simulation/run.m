@@ -9,7 +9,7 @@ edfStamViolationHistory = zeros(numRuns + 1, 1);
 lsaViolationHistory = zeros(numRuns + 1,1);
 lsaStamViolationHistory = zeros(numRuns + 1, 1);
 for j = 1 : numRuns
-seed = j + 2009;
+seed = j + 3022;
 
 rand('seed', seed);       % initialize rand to known seed
 randn('seed', seed);      % initialize randn to known seed
@@ -31,7 +31,7 @@ edfSchedule = scheduleEDF(taskList, simEnd);
 lsaSchedule = scheduleLSA(taskList, simEnd);
 
 %create STAM task list and create schedule the virtual tasks
-edfStamSchedule = scheduleEDF(stamTasks, simEnd);%convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
+edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
 lsaStamSchedule = convertSTAM(taskList, stamTasks, scheduleLSA(stamTasks, simEnd));
 
 % keep track of the number of violations that have occurred in a
@@ -84,5 +84,5 @@ edfStamViolationHistory(j) = edfStamViolations;
 lsaViolationHistory(j) = lsaViolations;
 lsaStamViolationHistory(j) = lsaStamViolations;
 
-plotSimulation(taskList, edfSchedule, stamTasks, edfStamSchedule, lastBatteryHistory);
+plotSimulation(taskList, edfSchedule, taskList, edfStamSchedule, lastBatteryHistory);
 end

@@ -26,7 +26,6 @@ for i = 1 : taskListSize
     else
        virtualTaskList(i,:) = taskList(i,:);
     end
-
 end
 
 end
