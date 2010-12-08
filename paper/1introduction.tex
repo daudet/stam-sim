@@ -1,7 +1,7 @@
 \section{Introduction}\label{sec:introduction}
 
 A wireless sensor network (\textsc{wsn}) consists of collaborating embedded devices (sensor nodes) with capabilities of sensing, computation and communication
-\cite{sudevalyam2010energy}. Wireless sensor networks can deployed for a plethora of purposes such as habitat \cite{mainwaring2002wireless},
+\cite{sudevalyam2010energy}. Wireless sensor networks can be deployed for a plethora of purposes such as habitat \cite{mainwaring2002wireless},
 earthquake \cite{suzuki2007earthquake} and health \cite{saadaoui2007architecture} monitoring.
 
 Most sensor nodes do not depend on existing infrastructure and are powered by batteries, which makes initial deployment in remote locations
@@ -18,8 +18,8 @@ Promising as it may seem, energy harvesting poses new challenges to the scientif
 \end{itemize}
 
 This paper evaluates the performance of two task scheduling techniques, Earliest Deadline First (\textsc{edf}) and the Lazy Scheduling
-Algorithm (\textsc{lsa}), for a single node under energy-limited conditions. The two techniques were conceived for unlimited and limited energy scenarios respectively \cite{moser2007real}. We also present a new scheduling technique, the Smooth to Averate Method
-(\textsc{stam}), designed to handle bursts in power consumption and address both time and energy constraints adequately.  
+Algorithm (\textsc{lsa}), for a single node under energy-limited conditions. The two techniques were conceived for unlimited and limited energy scenarios respectively \cite{moser2007real}. We also present two new scheduling techniques, the Smooth to Averate Method
+(\textsc{stam}) and Smooth to Full Utilization (\textsc{stfu}), designed to handle bursts in power consumption and address both time and energy constraints adequately without requiring a precise model of incoming energy.
 
 We consider solar energy scavenging through photo-voltaic conversion, as it provides the highest power density of conventional environmental energy harvesting techniques
 \cite{raghunathan2005design}. We use a Markov model based on a matrix of transition probabilities for three radiation intensity states to predict
