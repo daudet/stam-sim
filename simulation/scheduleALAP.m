@@ -1,5 +1,5 @@
 function schedule = scheduleALAP( taskList, scheduleLength)
-%scheduleALAP Generate schedule for the given task list using the a naive lazy 
+%scheduleALAP Generate schedule for the given task list using a naive lazy 
 %scheduling algorithm (As Late As Possible).
 
 t = 1; 
@@ -29,26 +29,28 @@ scheduleIndex = 1;
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 while t < scheduleLength
-	for i = 1 : numTasks
-			%sort rows by their latest possible start time
-	       	queue = sortrows(queue, 7)
-			%determine if there is an overlap with the next task
-			%if there is an overlap, skip to next task in the queue
-			if ((queue(i, 7) + queue(i,3)) > queue(i+1,7))
-				if(queue(i,3) <  queue(i+1,3))
-					break;
-				else
-					sprintf('There was a scheduling violation for the task set')
-			else
-				break;
-			end
+    
+    %sort the rows to find the minimum latest possible start time
+    queue = sortrows(queue,7);
+    %if there is an overlap, skip to next task in the queue
+ 	if ((queue(1, 7) + queue(1,3)) > queue(2,7))
+        %try and shift the first task forward to accommodate
+        overlap = ((queue(1, 7) + queue(1,3)) - queue(2,7));
+        %if start time can be moved ahead without going past current
+        %time we can accommodate both tasks
+        if (queue(1,7) - overlap) > t
+           t = queue(1,7) - overlap;
+        else
+           sprintf('There is a scheduling violation at time %d\n', t)
+           break;
+        end
+        
+    else
+        %set the start time for the given task
+        t = queue(1,7);
     end
-
-	%set the start time for the given task
-	t = queue(i,7)
-
     % i is the index of the task with the smallest last possible start time
-    taskinfo = num2cell(queue(i,:));
+    taskinfo = num2cell(queue(1,:));
     [task, period, runtime, energy, lastDeadline, nextDeadline, lastPossibleStartTime] = taskinfo{:};
     
 	%record the scheduled task in the schedule list
@@ -59,7 +61,7 @@ while t < scheduleLength
     %d = nextDeadline;
     lastDeadline = nextDeadline;
     nextDeadline = nextDeadline + period;
-    queue(i,:) = [task, period, runtime, energy, lastDeadline, nextDeadline, (nextDeadline - runtime)];
+    queue(1,:) = [task, period, runtime, energy, lastDeadline, nextDeadline, (nextDeadline - runtime)];
     t = t + runtime;
 end
 
