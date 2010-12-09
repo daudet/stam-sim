@@ -1,20 +1,36 @@
 \section{Introduction}\label{sec:introduction}
 
-A wireless sensor network (\textsc{wsn}) consists of collaborating sensor nodes with capabilities of sensing, computation and communication~\cite{sudevalyam2010energy}. Wireless sensor networks can be deployed for a plethora of purposes such as habitat monitoring~\cite{mainwaring2002wireless}, earthquake detection~\cite{suzuki2007earthquake}, and healthcare~\cite{saadaoui2007architecture}. 
+A wireless sensor network (\textsc{wsn}) consists of collaborating sensor nodes with capabilities of sensing, computation and communication~\cite{sudevalyam2010energy}. Wireless sensor networks can be deployed for a plethora of purposes such as habitat monitoring~\cite{mainwaring2002wireless}, earthquake detection~\cite{suzuki2007earthquake}, or healthcare~\cite{saadaoui2007architecture}. 
 
-To make deployment easy, wireless sensor networks usually do not rely on existing infrastructure, and sensor nodes are powered by batteries. On the other hand, the lifetime of these embedded devices is limited by the amount of energy that can be stored in the batteries. Furthermore, the number of sensors and their locations might render the activity of replacing nodes' batteries unfeasible or very costly~\cite{moser2007real}. 
+For ease of deployment, wireless sensor networks usually do not rely on existing infrastructure, and sensor nodes are typically battery powered. Therefore, the lifetime of these embedded devices is limited by the amount of energy that can be stored in the batteries. Furthermore, in many applications such as forest monitoring, the number of sensors and their locations might render the activity of replacing nodes' batteries unfeasible or very costly~\cite{moser2007real}. 
+There is a need for green solutions capable of powering sensor network applications 
+with ambient energy. 
 
 To solve the above problem, intensive research has been conducted on energy harvesting as a way to extend the lifetime of wireless sensor networks. Several types of energy such as solar, eolic (wind), vibrational, and thermal among others can be scavenged from the surroundings of a sensor node to replenish its battery~\cite{roundy2004power}. Promising as it may seem, energy harvesting poses new challenges to the scientific community~\cite{lu2010accurate}:
 
 \begin{itemize}
-	\item Environmental energy sources behave stochastically, making the accurate predication on incoming energy amount very difficult.
-	\item Conventional task scheduling techniques were not designed for energy-limited scenarios and cannot deal properly with the uncertainty in energy availability.
+	\item Environmental energy sources behave stochastically, making the accurate predication of incoming energy levels very difficult.
+	\item Conventional task scheduling techniques were not designed for energy-limited scenarios and cannot deal properly with uncertainty in energy availability.
 \end{itemize}
 
-It has been pointed out that the traditional scheduling method, Earliest Deadline First (\textsc{edf}), may not work well under energy-limited conditions~\cite{moser2007real}, and as such new algorithms such as the Lazy Scheduling Algorithm (\textsc{lsa}) has been proposed to ``solve" the problem~\cite{moser2007real}. Although it has been theoretically proved that LSA is optimal, it requires a good predication on the incoming energy source to operate well. We find that energy predication is non-trivial, and it is nearly impossible to implement any ``intelligent" learning algorithm for such purpose over tiny sensors due to the limited computational resource. Installing a pre-trained energy predication model does not work either, because such a model depends on where and when the model was built and may not work well when the sensors are deployed in different places and function over a long time period. 
+It has been pointed out that the traditional scheduling methods, such as Earliest Deadline First (\textsc{edf}), may not work well under energy-limited conditions~\cite{moser2007real}, and as such new algorithms such as the Lazy Scheduling Algorithm (\textsc{lsa}) has been proposed to ``solve" the problem~\cite{moser2007real}. 
+Although it has been theoretically proved that LSA is optimal, it requires an accurate predication on the incoming energy source to operate well. 
+Energy predication, however, is non-trivial, and it is challenging 
+to implement a suitably `intelligent'  prediction algorithm 
+on a typical sensor node due to the computational resources available on such a platform. 
+Installing a pre-trained energy predication model does not work either, 
+because such a model depends on where and when the model was built and may 
+not generalize when the sensors are deployed in different places and 
+function over a long time period. 
 
-In this paper, we make contributions by proposing two new scheduling techniques, the Smooth to Average Method (\textsc{stam}) and Smooth to Full Utilization (\textsc{stfu}), to handle the energy uncertainty and deadline constraint without relying on any energy predication model\footnote{Although in the later of the paper, we build an energy charging model for solar energy harvesting. This model is \textit{purely} for the purpose of performance comparison and in real implementation such a model is not required.}.
-We consider solar energy scavenging through photo-voltaic conversion, as it provides the highest power density of conventional environmental energy harvesting techniques~\cite{raghunathan2005design}. 
+In this paper, we make contributions by proposing two new scheduling techniques, the Smooth to Average Method (\textsc{stam}) and Smooth to Full Utilization (\textsc{stfu}), to handle energy uncertainty and deadline constraints without relying on any energy predication model\footnote{Although in the later of the paper, we build an energy charging model for solar energy harvesting. This model is \textit{purely} for the purpose of performance comparison and in real implementation such a model is not required.}.
+In our simulation-based evalutations, we consider solar energy scavenging through photo-voltaic conversion, as it provides the highest power density of conventional environmental energy harvesting techniques~\cite{raghunathan2005design}. 
+
+In the remainder of the paper we first discuss related work on energy-aware scheduling, 
+and formalize the problem of periodic real-time task scheduling. 
+We then present two static, energy-aware scheduling algorithms and give
+an evaluation of their performance compared to related work through simulations. 
+Finally, we given some concluding remarks. 
 
 %We use a Markov model based on a matrix of transition probabilities for three radiation %intensity states to predict the power provided by the harvesting unit \cite
 %{poggi2000stochastic}.
