@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1"
+    ComputedModelVersion    "1.2"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -29,9 +29,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "nrqm"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Nov 27 12:18:16 2010"
-  RTWModifiedTimeStamp	  212675117
-  ModelVersionFormat	  "1.%<AutoIncrement:1>"
+  LastModifiedDate	  "Mon Dec 06 22:56:21 2010"
+  RTWModifiedTimeStamp	  213576954
+  ModelVersionFormat	  "1.%<AutoIncrement:2>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -654,7 +654,7 @@ Model {
   }
   System {
     Name		    "solar"
-    Location		    [829, 228, 1838, 768]
+    Location		    [711, 345, 1720, 885]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -668,7 +668,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    16
+    SIDHighWatermark	    17
     Block {
       BlockType		      Constant
       Name		      "Constant"
@@ -736,7 +736,7 @@ Model {
       Name		      "Generic Battery"
       SID		      16
       Ports		      [0, 0, 0, 0, 0, 1, 1]
-      Position		      [475, 310, 515, 350]
+      Position		      [475, 305, 515, 345]
       BlockRotation	      270
       BlockMirror	      on
       LibraryVersion	      "1.1"
@@ -753,7 +753,7 @@ Model {
       RTWMemSecDataParameters "Inherit from model"
       ClassName		      "generic_battery"
       SchemaVersion	      "1"
-      Vnom		      "12"
+      Vnom		      "3"
       Vnom_unit		      "V"
       R1		      "2"
       R1_unit		      "Ohm"
@@ -763,7 +763,7 @@ Model {
       AH_unit		      "hr*A"
       AH0		      "1"
       AH0_unit		      "hr*A"
-      V1		      "11.5"
+      V1		      "1.8"
       V1_unit		      "V"
       AH1		      "0.2"
       AH1_unit		      "hr*A"
@@ -991,7 +991,7 @@ Model {
 	ConnectType		"DEST_DEST"
 	SrcBlock		"Generic Battery"
 	SrcPort			RConn1
-	Points			[-65, 0; 0, -30]
+	Points			[-65, 0; 0, -25]
       }
     }
     Line {
@@ -1028,7 +1028,7 @@ Model {
       LineType		      "Connection"
       SrcBlock		      "Current Sensor"
       SrcPort		      RConn2
-      Points		      [10, 0; 0, 20; 10, 0]
+      Points		      [10, 0; 0, 20]
       DstBlock		      "Generic Battery"
       DstPort		      LConn1
     }

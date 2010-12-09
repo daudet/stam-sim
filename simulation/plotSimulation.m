@@ -1,12 +1,15 @@
 function plotSimulation( taskList, schedule, stamTasks, stamEquivalent, batteryHistory )
 %PLOTSIMULATION Summary of this function goes here
 %   Detailed explanation goes here
-
-simEnd = stamEquivalent(size(stamEquivalent,1)) + stamTasks(stamEquivalent(size(stamEquivalent,2), 2), 2) + 1;
+if ~isempty(stamTasks)
+    simEnd = stamEquivalent(size(stamEquivalent,1)) + stamTasks(stamEquivalent(size(stamEquivalent,2), 2), 2) + 1;
+else
+    simEnd = schedule(size(schedule,1)) + taskList(schedule(size(schedule,2), 2), 2) + 1;
+end
 visual = zeros(simEnd,4)';
 stamVisual = zeros(simEnd,4)';
 
-for tableIndex = 1 : min(size(stamEquivalent, 1), size(schedule, 1))
+for tableIndex = 1 : size(schedule, 1)
     taskNum = schedule(tableIndex,2);
     execTime = schedule(tableIndex,1);
     if taskNum ~= 0
@@ -45,7 +48,7 @@ if ~isempty(stamEquivalent)
     stairs((0:size(stamVisual,2)-1) + 0.002*simEnd , stamVisual(4,:) - 3*vstep, 'Color', 'green');
 end
 hold off
-axis([0 simEnd (-3.5*vstep) (stamTasks(1,3) + 0.5*vstep)]);
+axis([0 simEnd (-3.5*vstep) (taskList(1,3) + 0.5*vstep)]);
 title('EDF Schedules for Real and Virtual Tasks', 'FontSize', 12);
 xlabel('Time (days)');
 ylabel('Energy units consumed per day');

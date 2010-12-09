@@ -1,7 +1,7 @@
-numRuns = 1;
-numEdfSimulations = 1;
+numRuns = 1000;
+numEdfSimulations = 0;
 numLsaSimulations = 0;
-numEdfStamSimulations = 1;
+numEdfStamSimulations = 100;
 numLsaStamSimulations = 0;
 
 edfViolationHistory = zeros(numRuns + 1,1);
@@ -9,7 +9,7 @@ edfStamViolationHistory = zeros(numRuns + 1, 1);
 lsaViolationHistory = zeros(numRuns + 1,1);
 lsaStamViolationHistory = zeros(numRuns + 1, 1);
 for j = 1 : numRuns
-seed = j + 3022;
+seed = j + 7022;
 
 rand('seed', seed);       % initialize rand to known seed
 randn('seed', seed);      % initialize randn to known seed
@@ -26,13 +26,18 @@ batteryLevel = 12;
 simEnd = 100;
 
 % create real task list and schedule the real tasks
+if j == 48
+    j
+end
 [taskList, stamTasks] = generateTaskList(4);
 edfSchedule = scheduleEDF(taskList, simEnd);
-lsaSchedule = scheduleLSA(taskList, simEnd);
+edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
+if numLsaSimulations > 0 || numLsaStamSimulations > 0
+    lsaSchedule = scheduleALAP(taskList, simEnd);
+    lsaStamSchedule = convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd));
+end
 
 %create STAM task list and create schedule the virtual tasks
-edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
-lsaStamSchedule = convertSTAM(taskList, stamTasks, scheduleLSA(stamTasks, simEnd));
 
 % keep track of the number of violations that have occurred in a
 % simulation.
@@ -84,5 +89,6 @@ edfStamViolationHistory(j) = edfStamViolations;
 lsaViolationHistory(j) = lsaViolations;
 lsaStamViolationHistory(j) = lsaStamViolations;
 
-plotSimulation(taskList, edfSchedule, taskList, edfStamSchedule, lastBatteryHistory);
 end
+
+plotSimulation(taskList, edfSchedule, taskList, edfStamSchedule, lastBatteryHistory);

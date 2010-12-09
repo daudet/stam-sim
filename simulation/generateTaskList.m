@@ -20,7 +20,7 @@ for i = 1 : 100
     % if utilization < 1 then tasks are schedulable.  Otherwise try again.
     utilization = sum(taskList(:, 2) ./ taskList(:, 1));
     stamUtilization = sum(stamTasks(:, 2) ./ stamTasks(:, 1));
-    if utilization < 1 && stamUtilization < 1
+    if utilization < 0.5 && stamUtilization < 1
         break;
     end
 end
