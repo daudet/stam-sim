@@ -2,20 +2,24 @@
 
 To model task execution in the sensor nodes, we assume the following: 
 \begin{itemize}
-	\item (A1) The requests for all tasks are periodic, with constant interval between requests. 
+	\item (A1) The requests for all tasks are periodic, with constant interval between requests. Such tasks are also called recurring tasks. 
 	\item (A2) Each request of a task has a hard deadline, which is defined as the time when the next request for the task arrives. 
-	\item (A3) A task has constant run-time. Run-time refers to the time that  is taken by the microprocessor to execute the task without interruption.
+	\item (A3) A task has constant run-time. Run-time refers to the time to execute the task without interruption. We assume that the priority of tasks may change, but once being executed, a task cannot be interrupted. 
 	\item (A4) The task drains energy with a constant rate during its execution time\footnote{Energy consumption on sensor nodes largely depends on the operations of peripheral devices (e.g., sensors and wireless transmitters) associated with the task rather than executing code in the microprocessor.}.       
 	\item (A5) The tasks are independent in that requests for a given task do not depend on the initialization or the completion of requests for other tasks.
-	\item (A6) A schedule exists that satisfies the timing requirements of all tasks.
+	\item (A6) The sensor node includes energy harvester to supply power. It also has an energy storage module (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
+	%\item (A6) A schedule exists that satisfies the timing requirements of all tasks.
 \end{itemize}
 
-To model the energy harvester component we assume the following:
- \begin{itemize}
-	\item (A7) The energy harvester provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
-	\item (A8) The sensor node also includes an energy storage module (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
-\end{itemize}
+%To model the energy harvester component we assume the following:
+ %\begin{itemize}
+%	\item (A7) The energy harvester provides energy source to the node with a power function $P_S(t)$, which can be modeled as a stationary random process during the time in consideration.
+%	\item (A8) The sensor node also includes an energy storage module (capacitors or rechargeable batteries) with the maximum capacity of $C$. 
+%\end{itemize}
  
-We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, T_i, E_i>$, where $I_i$ denotes the periodic interval time between requests for the task, $T_i$ denotes the task's execution time, and $E_i$ denotes the task's energy consumption. We denote the harvester component by $<C(t), P_S(t)>$, where $C(t)$ is the energy capacity at time $t$ and $P_S(t)$ is the stochastic energy input function. For a set of tasks scheduled according to some scheduling algorithm, we say that a \textit{violation} occurs at time $t$ if the node's energy level drops to zero.
+We can denote a set of recurring tasks by $\{\tau_1, \tau_2, \ldots, \tau_n\}$, with each task represented by a tuple $\tau_i = <I_i, T_i, E_i>$, where $I_i$ denotes the periodic interval time between requests for the task, $T_i$ denotes the task's execution time, and $E_i$ denotes the task's energy consumption. For a set of tasks scheduled according to some scheduling algorithm, we say that a \textit{task violation} occurs at time $t$ if the node's energy level drops to zero or $t$ is the deadline of an unfulfilled request.  
 
-In this paper we consider the question of how best to schedule tasks to reduce the likelihood of causing an energy violation.
+
+%We denote the harvester component by $<C(t), P_S(t)>$, where $C(t)$ is the energy capacity at time $t$ and $P_S(t)$ is the stochastic energy input function. For a set of tasks scheduled according to some scheduling algorithm, we say that a \textit{violation} occurs at time $t$ if the node's energy level drops to zero.
+
+In this paper we consider the question of how best to schedule tasks to reduce the likelihood of task violations.
