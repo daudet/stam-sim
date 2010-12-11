@@ -1,14 +1,13 @@
 function schedule = scheduleALAP( taskList, scheduleLength)
 %scheduleALAP Generate schedule for the given task list using a naive lazy 
 %scheduling algorithm (As Late As Possible).
-global nrts;
-t = 1; 
+
 numTasks = size(taskList, 1);
 
 %queue column headers: task#, period, runtime, energy, lastDeadLine, nextDeadline]
 queue = [(1 : numTasks)' taskList zeros(numTasks, 1) taskList(:, 1) zeros(numTasks, 1)];
 
-schedule = zeros(scheduleLength, 2);
+schedule = zeros(scheduleLength, 3);
 scheduleIndex = 1;
 slotUtilization = zeros(scheduleLength * 2,1);
 
@@ -19,7 +18,6 @@ while ~isempty(find(queue(:, 6) < scheduleLength, 1))
             % schedule this task unless its next deadline is beyond the
             % schedule length
             nextRuntime = queue(i,6) - queue(i, 3);
-            nrts = [nrts nextRuntime];
             while ~isempty(find(slotUtilization(nextRuntime : (nextRuntime + queue(i,3) - 1)), 1))
                 % find an empty timeslice for the task
                 nextRuntime = nextRuntime - 1;
@@ -27,7 +25,7 @@ while ~isempty(find(queue(:, 6) < scheduleLength, 1))
                     warning('Aargh');
                 end
             end
-            schedule(scheduleIndex, :) = [nextRuntime queue(i, 1)];
+            schedule(scheduleIndex, :) = [nextRuntime queue(i, 1) queue(i, 5)];
             scheduleIndex = scheduleIndex + 1;
             slotUtilization(nextRuntime : nextRuntime + queue(i, 3) - 1) = ones(queue(i,3), 1);
             queue(i, 5) = queue(i, 6);
@@ -37,8 +35,8 @@ while ~isempty(find(queue(:, 6) < scheduleLength, 1))
     
 end
 
-
-schedule = [schedule(schedule(:,1) ~= 0, 1) schedule(schedule(:,2) ~= 0, 2)];
+endIndex = find(schedule(:,1) == 0, 1);
+schedule = schedule(1:endIndex-1, :);
 schedule = sortrows(schedule, 1);
 	
 	%Since there is no energy prediction or any energy consideration

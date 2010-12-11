@@ -5,7 +5,7 @@ function realSchedule = convertSTAM( taskList, stamTaskList, virtualSchedule )
 %   has the real tasks scheduled somewhere within the timeslice of the
 %   corresponding virtual task.
 
-realSchedule = zeros(size(virtualSchedule, 1), 2);
+realSchedule = zeros(size(virtualSchedule, 1), 3);
 
 for i = 1 : size(virtualSchedule, 1)
     taskNum = virtualSchedule(i, 2);
@@ -15,7 +15,7 @@ for i = 1 : size(virtualSchedule, 1)
     else
         % Slot the real task into the end of the virtual task timeslice.
         startTime = virtualSchedule(i,1) + stamTaskList(taskNum, 2) - taskList(taskNum, 2);
-        realSchedule(i, :) = [startTime taskNum];
+        realSchedule(i, :) = [startTime taskNum virtualSchedule(i, 3)];
     end
 end
 

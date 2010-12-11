@@ -15,7 +15,7 @@ for i = 1 : 100
     energies = periods .* energies / 40 + 0.5; % a high-energy task will probably be low-frequency
 
     taskList = [floor(periods) floor(durations) energies];
-    stamTasks = createSTFU(taskList);
+    stamTasks = createSTAM(taskList);
 
     % if utilization < 1 then tasks are schedulable.  Otherwise try again.
     utilization = sum(taskList(:, 2) ./ taskList(:, 1));
