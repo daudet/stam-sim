@@ -1,8 +1,8 @@
-numRuns = 100;
+numRuns = 10;
 numEdfSimulations = 0;
 numLsaSimulations = 0;
 numEdfStamSimulations = 0;
-numLsaStamSimulations = 100;
+numLsaStamSimulations = 10;
 
 edfViolationHistory = zeros(numRuns + 1,1);
 edfStamViolationHistory = zeros(numRuns + 1, 1);
@@ -33,7 +33,10 @@ end
 %edfSchedule = scheduleEDF(taskList, simEnd);
 %edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
 if numLsaSimulations > 0 || numLsaStamSimulations > 0
-    lsaSchedule = scheduleALAP(taskList, simEnd);
+    %use pseudoSimulate to use energy predictive ALAP algorithm
+    lsaSchedule = pseudoSimulate(taskList, scheduleALAP(taskList, simEnd), batteryLevel, idleEnergy, 0);
+    
+    %lsaSchedule = scheduleALAP(taskList, simEnd);
     lsaStamSchedule = convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd));
 end
 
@@ -91,4 +94,4 @@ lsaStamViolationHistory(j) = lsaStamViolations;
 
 end
 
-plotSimulation(taskList, edfSchedule, taskList, edfStamSchedule, lastBatteryHistory);
+%plotSimulation(taskList, edfSchedule, taskList, edfStamSchedule, lastBatteryHistory);
