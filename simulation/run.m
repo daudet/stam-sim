@@ -1,8 +1,8 @@
-numRuns = 10;
+numRuns = 1;
 numEdfSimulations = 0;
 numLsaSimulations = 0;
 numEdfStamSimulations = 0;
-numLsaStamSimulations = 10;
+numLsaStamSimulations = 1;
 
 edfViolationHistory = zeros(numRuns + 1,1);
 edfStamViolationHistory = zeros(numRuns + 1, 1);
@@ -30,14 +30,12 @@ if j == 48
     j;
 end
 [taskList, stamTasks] = generateTaskList(4);
-%edfSchedule = scheduleEDF(taskList, simEnd);
-%edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
 if numLsaSimulations > 0 || numLsaStamSimulations > 0
     %use pseudoSimulate to use energy predictive ALAP algorithm
     lsaSchedule = pseudoSimulate(taskList, scheduleALAP(taskList, simEnd), batteryLevel, idleEnergy, 0);
     
     %lsaSchedule = scheduleALAP(taskList, simEnd);
-    lsaStamSchedule = convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd));
+    lsaStamSchedule = pseudoSimulate(taskList, convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd)), simEnd, batteryLevel, idleEnergy);
 end
 
 %create STAM task list and create schedule the virtual tasks
@@ -66,7 +64,7 @@ rand('seed', seed);       % initialize rand to known seed
 randn('seed', seed);      % initialize randn to known seed
 for i = 1 : numLsaSimulations
     % simulate the calculated schedule
-    [v, lastBatteryHistory] = simulate(taskList, lsaSchedule, simEnd, batteryLevel, idleEnergy, 0);
+    [v, lastBatteryHistory] = simulate(taskList, lsaSchedule, simEnd, batteryLevel, idleEnergy, 1);
     lsaViolations = lsaViolations + v;
 end
 

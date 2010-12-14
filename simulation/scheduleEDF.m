@@ -7,7 +7,7 @@ numTasks = size(taskList, 1);
 %queue column headers: task#, period, runtime, energy, lastDeadLine, nextDeadline
 queue = [(1 : numTasks)' taskList zeros(numTasks, 1) taskList(:, 1)];
 
-schedule = zeros(scheduleLength, 2);
+schedule = zeros(scheduleLength, 3);
 scheduleIndex = 1;
 
 while t < scheduleLength
@@ -29,8 +29,7 @@ while t < scheduleLength
     %s = sprintf('Task %2d scheduled to run at time %5d (last deadline was %5d, this deadline was %5d).', task, t, lastDeadline, nextDeadline);
     %disp(s);
     
-    schedule(scheduleIndex, 1) = t;
-    schedule(scheduleIndex, 2) = task;
+    schedule(scheduleIndex, :) = [t task lastDeadline];
     scheduleIndex = scheduleIndex + 1;
     
     %d = nextDeadline;
@@ -41,7 +40,9 @@ while t < scheduleLength
 end
 
 % strip the trailing zeros from the schedule array
-schedule = [schedule(schedule(:,1) ~= 0, 1) schedule(schedule(:,2) ~= 0, 2)];
+endIndex = find(schedule(:,1) == 0, 1);
+schedule = schedule(1:endIndex-1, :);
+schedule = sortrows(schedule, 1);
 
 end
 

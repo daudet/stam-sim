@@ -60,4 +60,6 @@ while t <= simEnd
 
 end
 
+newScheduleTable = scheduleTable;
+
 end
