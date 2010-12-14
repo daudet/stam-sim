@@ -86,7 +86,7 @@ The \textsc{ALAP} and \textsc{LSA} static schedulers performed much better than 
 
 In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, since our version of \textsc{LSA} is equivalent to \textsc{ALAP} pre-processed with the dynamic simulator.  The dynamic simulations result is a very low violation rate because the model can detect and respond when the battery reaches full capacity unexpectedly.  Running \textsc{ALAP} and \textsc{LSA} on \textsc{STAM} tasks produces slightly worse results than on physical tasks.  This is a result of the small idle time inserted before the physical tasks, which causes energy to be wasted when a \textsc{STAM} task is rescheduled.
 
-\begin{figure}
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.57]{edfbattery.png}
 \label{fig:edfbattery}
@@ -94,7 +94,7 @@ In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, s
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.57]{edfstfubattery.png}
 \label{fig:edfstfubattery}
@@ -102,7 +102,7 @@ In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, s
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.57]{lsabattery.png}
 \label{fig:lsabattery}
@@ -110,10 +110,18 @@ In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, s
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[scale=0.57]{lsastambattery.png}
 \label{fig:lsastambattery}
+\caption{Schedule (top) and battery charge level (bottom) during simulation of static LSA algorithm with STAM tasks.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[scale=0.57]{violations_vs_cpuutil.png}
+\label{fig:violations_vs_cpuutil}
 \caption{Schedule (top) and battery charge level (bottom) during simulation of static LSA algorithm with STAM tasks.}
 \end{center}
 \end{figure}
