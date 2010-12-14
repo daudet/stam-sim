@@ -23,16 +23,16 @@ We generated a table of energy inputs to the system using the solar cell model t
 \hline
 \textbf{$G$ ($\frac{W}{m^2}$)} & \textbf{$I_c$ ($A$)} & \textbf{$G$ ($\frac{W}{m^2}$)} & \textbf{$I_c$ ($A$)} \\
 \hline
-50 & 0.190 & 175 & 0.665 \\
-75 & 0.285 & 200 & 0.760 \\
-100 & 0.380 & 225 & 0.855 \\
+\textbf{50} & \textbf{0.190} & 175 & 0.665 \\
+75 & 0.285 & \textbf{200} & \textbf{0.760} \\
+\textbf{100} & \textbf{0.380} & 225 & 0.855 \\
 125 & 0.475 & 250 & 0.950 \\
 150 & 0.570 & 275 & 1.045 \\
 \hline
 \end{tabular}
 \end{center}
 \label{tab:radiance}
-\caption{Solar panel energy output}
+\caption{Solar panel energy output (bold values are used in our weather model)}
 \end{table}
 The solar cell's current output with a battery load is related to its radiation input by the linear function $I_c = 0.0038G$.  We use the values of $G = 50, 100, 200 \frac{W}{m^2}$ to represent the stormy, cloudy, and sunny weather conditions in our weather model.
 
@@ -86,7 +86,37 @@ The \textsc{ALAP} and \textsc{LSA} static schedulers performed much better than 
 
 In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, since our version of \textsc{LSA} is equivalent to \textsc{ALAP} pre-processed with the dynamic simulator.  The dynamic simulations result is a very low violation rate because the model can detect and respond when the battery reaches full capacity unexpectedly.  Running \textsc{ALAP} and \textsc{LSA} on \textsc{STAM} tasks produces slightly worse results than on physical tasks.  This is a result of the small idle time inserted before the physical tasks, which causes energy to be wasted when a \textsc{STAM} task is rescheduled.
 
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.57]{edfbattery.png}
+\label{fig:edfbattery}
+\caption{Schedule (top) and battery charge level (bottom) during simulation of EDF algorithm.}
+\end{center}
+\end{figure}
 
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.57]{edfstfubattery.png}
+\label{fig:edfstfubattery}
+\caption{Schedule (top) and battery charge level (bottom) during simulation of EDF algorithm on STFU tasks.}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.57]{lsabattery.png}
+\label{fig:lsabattery}
+\caption{Schedule (top) and battery charge level (bottom) during simulation of static LSA algorithm.}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.57]{lsastambattery.png}
+\label{fig:lsastambattery}
+\caption{Schedule (top) and battery charge level (bottom) during simulation of static LSA algorithm with STAM tasks.}
+\end{center}
+\end{figure}
 
 
 
