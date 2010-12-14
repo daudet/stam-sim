@@ -1,4 +1,4 @@
-function [taskList, stamTasks] = generateTaskList(numTasks)
+function [taskList, stamTasks, stfuTasks] = generateTaskList(numTasks)
 %GENERATETASKLIST Generate a list of periodic tasks with random periods and
 %energy demands.
 %
@@ -16,6 +16,7 @@ for i = 1 : 100
 
     taskList = [floor(periods) floor(durations) energies];
     stamTasks = createSTAM(taskList);
+    stfuTasks = createSTFU(taskList);
 
     % if utilization < 1 then tasks are schedulable.  Otherwise try again.
     utilization = sum(taskList(:, 2) ./ taskList(:, 1));

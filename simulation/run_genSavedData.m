@@ -1,9 +1,9 @@
 clear all
 close all
 
-SESSION_NUMBER = 2;
+SESSION_NUMBER = 3;
 
-numRuns = 10;
+numRuns = 100;
 numSims = 100;
 numEdfSimulations = numSims;
 numLsaSimulations = numSims;
@@ -48,26 +48,31 @@ for j = 1 : numRuns
   for utilizationIndex = 1:length( utilizationBinArray ) 
     utilizationBin = utilizationBinArray(utilizationIndex);
 
-    seed = j + utilizationIndex*numRuns
+    seed = j + 100 + utilizationIndex*numRuns;
 
     % seed each simulation with the next random number
     %seed = rand();
 
     %generate a task list within some utilization bound
-    [taskList, stamTasks] = generateTaskListBounded(4,utilizationBin,utilizationBin+utilizationBinWidth);
+    [taskList, stamTasks, stfuTasks] = generateTaskListBounded(4,utilizationBin,utilizationBin+utilizationBinWidth);
 
     if numLsaSimulations > 0 || numLsaStamSimulations > 0
         %use pseudoSimulate to use energy predictive ALAP algorithm
         lsaSchedule = pseudoSimulate(taskList, scheduleALAP(taskList, simEnd), batteryLevel, idleEnergy, 0);
 
         %lsaSchedule = scheduleALAP(taskList, simEnd);
-        lsaStamSchedule = pseudoSimulate(taskList, convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd)), simEnd, batteryLevel, idleEnergy);
+        lsa_sched_broke = false;
+        try
+          lsaStamSchedule = pseudoSimulate(taskList, convertSTAM(taskList, stamTasks, scheduleALAP(stamTasks, simEnd)), simEnd, batteryLevel, idleEnergy);
+        catch
+          lsa_sched_broke = true;
+        end
     end
 
     edfSchedule = scheduleEDF(taskList, simEnd);
 
     %create STAM task list and schedule the virtual tasks
-    edfStamSchedule = convertSTAM(taskList, stamTasks, scheduleEDF(stamTasks, simEnd));
+    edfStamSchedule = convertSTAM(taskList, stfuTasks, scheduleEDF(stfuTasks, simEnd));
 
     % keep track of the number of violations that have occurred in a
     % simulation.
@@ -91,7 +96,7 @@ for j = 1 : numRuns
     randn('seed', seed);      % initialize randn to known seed
     for i = 1 : numLsaSimulations
         % simulate the calculated schedule
-        [v, lastBatteryHistory] = simulate(taskList, lsaSchedule, simEnd, batteryLevel, idleEnergy, 1);
+        [v, lastBatteryHistory] = simulate(taskList, lsaSchedule, simEnd, batteryLevel, idleEnergy, 0);
         lsaViolations = lsaViolations + v;
     end
 
@@ -104,11 +109,15 @@ for j = 1 : numRuns
     end
 
     %%%%% Run LSA STAM simulation
-    rand('seed', seed);       % initialize rand to known seed
-    randn('seed', seed);      % initialize randn to known seed
-    for i = 1 : numLsaStamSimulations
-        [v, lastBatteryHistory] = simulate(taskList, lsaStamSchedule, simEnd, batteryLevel, idleEnergy, 1);
-        lsaStamViolations = lsaStamViolations + v;
+    if ~lsa_sched_broke
+      rand('seed', seed);       % initialize rand to known seed
+      randn('seed', seed);      % initialize randn to known seed
+      for i = 1 : numLsaStamSimulations
+          [v, lastBatteryHistory] = simulate(taskList, lsaStamSchedule, simEnd, batteryLevel, idleEnergy, 0);
+          lsaStamViolations = lsaStamViolations + v;
+      end
+    else
+      lsaStamViolations = -1;
     end
     
     % save data from this run
