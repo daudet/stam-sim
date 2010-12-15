@@ -53,7 +53,7 @@ limited in capacity, such that if $B_t = B_{max}$ then any excess energy that is
 \subsection{Simulation Results}
 We performed 1000 runs, with one run consisting of 100 simulations each on several task schedules using common random numbers (\emph{i.e.} using the same weather patterns).  Each simulation covered a period of 100 time units, and if the battery charge dropped to 0 during the simulation we incremented a violation counter.  We recorded the number of violations produced during each run.  
 
-Figure \ref{XXXX} shows the average number of violations that each algorithm we tried produced over 100 simulations, as a function of utilization.
+Figure \ref{fig:violations_vs_cpuutil} shows the average number of violations that each algorithm we tried produced over 100 simulations, as a function of physical task utilization.
 
 We used earliest-deadline-first (\textsc{EDF}) and as-late-as-possible (\textsc{ALAP}) scheduling to schedule real tasks, \textsc{STAM} virtual tasks, and \textsc{STFU} virtual tasks (\textsc{STFU} only applies to \textsc{EDF} since high-utilization task lists are hard to schedule with the other algorithms).  In \textsc{EDF}, each task is scheduled as early as possible, in order of increasing deadline.  In \textsc{ALAP}, tasks are scheduled at the latest time possible such that no task misses its deadline.  \textsc{ALAP} is an energy-ignorant version of \textsc{LSA}, which means that it can be scheduled statically without a sophisticated energy prediction model.  
 
