@@ -1,4 +1,4 @@
-function [violation, batteryHistory] = simulate(taskList, schedule, simEnd, batteryLevel, idleEnergy, useDynamicScheduling)
+function [violation, batteryHistory, dynamicSchedule] = simulate(taskList, schedule, simEnd, batteryLevel, idleEnergy, useDynamicScheduling)
 %Simulation Framework
 %November 26th, 2010
 
@@ -40,16 +40,17 @@ scheduleIndex = 1;
     end
 
 t = 1;
+dynamicSchedule = scheduleTable;
 while t <= simEnd   
-    if (t == scheduleTable(scheduleIndex,1))
-        curTask = scheduleTable(scheduleIndex,2);
+    if (t == dynamicSchedule(scheduleIndex,1))
+        curTask = dynamicSchedule(scheduleIndex,2);
         taskEnd =  t + taskList(curTask,2) - 1;
     end
     
     
     if (curTask == 0)
         if currentBatteryLevel >= maxBatteryLevel - idleEnergy && useDynamicScheduling
-            [scheduleTable, reallocated] = dynamicallyReallocateSchedule(scheduleTable);
+            [dynamicSchedule, reallocated] = dynamicallyReallocateSchedule(dynamicSchedule);
             if reallocated
                 continue;
             end
@@ -71,7 +72,7 @@ while t <= simEnd
     
     if (taskEnd == t)
         curTask = 0;
-        scheduleIndex = mod(scheduleIndex, size(scheduleTable, 1)) + 1;
+        scheduleIndex = mod(scheduleIndex, size(dynamicSchedule, 1)) + 1;
     end
     
     %update the battery level history

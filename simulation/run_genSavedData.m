@@ -1,7 +1,7 @@
 clear all
 close all
 
-SESSION_NUMBER = 3;
+SESSION_NUMBER = 5;
 
 numRuns = 100;
 numSims = 100;
@@ -42,7 +42,7 @@ for j = 1 : numRuns
   end
   %[taskList, stamTasks] = generateTaskList(4);
 
-  utilizationBinArray = [ 0.2, 0.3, 0.4, 0.5, 0.6];
+  utilizationBinArray = [ 0.2, 0.3, 0.4, 0.5, 0.6 0.7 0.8];
   utilizationBinWidth = 0.1;
 
   for utilizationIndex = 1:length( utilizationBinArray ) 
@@ -58,7 +58,11 @@ for j = 1 : numRuns
 
     if numLsaSimulations > 0 || numLsaStamSimulations > 0
         %use pseudoSimulate to use energy predictive ALAP algorithm
-        lsaSchedule = pseudoSimulate(taskList, scheduleALAP(taskList, simEnd), batteryLevel, idleEnergy, 0);
+        try
+            lsaSchedule = pseudoSimulate(taskList, scheduleALAP(taskList, simEnd), batteryLevel, idleEnergy, 0);
+        catch
+            lsa_sched_broke = true;
+        end
 
         %lsaSchedule = scheduleALAP(taskList, simEnd);
         lsa_sched_broke = false;

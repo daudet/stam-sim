@@ -48,18 +48,24 @@ if ~isempty(stamEquivalent)
     stairs((0:size(stamVisual,2)-1) + 0.002*simEnd , stamVisual(4,:) - 3*vstep, 'Color', 'green');
 end
 hold off
-axis([0 simEnd (-3.5*vstep) (taskList(1,3) + 0.5*vstep)]);
-title('EDF Schedules for Real and Virtual Tasks', 'FontSize', 12);
-xlabel('Time (days)');
-ylabel('Energy units consumed per day');
+ymin = -3.5*vstep;
+ymax = taskList(1,3) + 0.5*vstep;
+axis([0 simEnd ymin ymax]);
+%title('EDF Schedules for Real and Virtual Tasks', 'FontSize', 12);
+xlabel('Time (time units)', 'FontSize', 12);
+ylabel('Power', 'FontSize', 12);
+set(gca,'YTick', ymin - vstep/2 : (ymax - ymin) / 4 : ymax - vstep/2)
+set(gca,'YTickLabel', '|#4|#3|#2|#1|')
+
 
 x = 0 : size(batteryHistory, 2) - 1;
 subplot(2,1,2);
 plot(x, batteryHistory);
 axis([0 simEnd 0 12]);
-title('Battery Charge History', 'FontSize', 12);
-xlabel('Time (days)');
-ylabel('Battery charge');
+%title('Battery Charge History', 'FontSize', 12);
+xlabel('Time (time units)', 'FontSize', 12);
+ylabel('Battery charge', 'FontSize', 12);
+set(gca,'YTickLabel','')
 
 end
 

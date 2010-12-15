@@ -122,13 +122,11 @@ In the dynamic simulator, \textsc{ALAP} and \textsc{LSA} perform equally well, s
 \begin{center}
 \includegraphics[scale=0.57]{violations_vs_cpuutil.png}
 \label{fig:violations_vs_cpuutil}
-\caption{Schedule (top) and battery charge level (bottom) during simulation of static LSA algorithm with STAM tasks.}
+\caption{Comparison of violation rates}
 \end{center}
 \end{figure}
 
-
-
-
+Figures \ref{fig:edfbattery} to \ref{fig:lsastambattery} show the change in battery charge level when simulating a particular task list scheduled with four different algorithms with common random numbers.  Figures \ref{fig:edfbattery} and \ref{fig:edfstfubattery} show the relative performance of plain \textsc{EDF} and \textsc{EDF} performed on \textsc{STFU} tasks.  The battery levels for the two simulations are both trending downward at approximately the same rate, but for the \textsc{STFU} simulation the battery level rate of change is smoother.  The large dip in charge that causes a violation at time 99 is ``filtered out'' by \textsc{STFU}, which gives the system a chance to collect more power and recover.  The smoothing effect is also demonstrated in figures \ref{fig:lsabattery} and \ref{fig:lsastambattery} for the static \textsc{LSA} algorithm with and without \textsc{STAM}.
 
 
 
