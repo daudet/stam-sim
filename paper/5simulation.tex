@@ -151,11 +151,11 @@ The \textsc{alap} and \textsc{lsa} static schedulers performed much better than 
 Results for scheduling \textsc{stfu} using \textsc{alap} were not reported as the performance of the scheduler 
 approaches \textsc{edf} for high CPU utilization task lists.  
 %degrades  , so we did not schedule \textsc{stfu} virtual tasks with \textsc{alap}.  
-As expected, using \textsc{stam} virtual tasks to generate \textsc{alap} and \textsc{lsa} schedules improves the perforance.  
+As expected, using \textsc{stam} virtual tasks to generate \textsc{alap} and \textsc{lsa} schedules improved the performance.  
 %Task lists with high utilization were difficult to schedule with \textsc{alap}, so we did not schedule \textsc{stfu} virtual tasks with \textsc{alap}.  Using \textsc{stam} virtual tasks to generate \textsc{alap} and \textsc{lsa} schedules improves the results even more.
 
-The dynamic versions of the scheduling algorithms resulted in very low violation rates because the model detects 
-and respond to a full battery.  Running \textsc{alap} and \textsc{lsa} on \textsc{stam} tasks produced slightly worse 
+The dynamic versions of the scheduling algorithms resulted in very low violation rates because the model detected 
+and responded to a full battery.  Running \textsc{alap} and \textsc{lsa} on \textsc{stam} tasks produced slightly worse 
 results than on physical tasks.  This is a result of the small idle time inserted before the physical tasks, 
 which causes energy to be wasted when a \textsc{stam} task is rescheduled.
 The dynamic versions of \textsc{alap} and \textsc{lsa} perform equally well, since our version of \textsc{lsa} is equivalent to \textsc{alap} when pre-processed. % with the dynamic version of the simulator.  
